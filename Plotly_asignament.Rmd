@@ -1,0 +1,42 @@
+---
+title: "Plotly"
+author: "Thomas Imanol Rodriguez"
+date: "3/3/2022"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=TRUE}
+library(plotly)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+```
+
+```{r, echo=TRUE}
+data("EuStockMarkets")
+stocks<-as.data.frame(EuStockMarkets) %>%
+  gather(index, price) %>%
+  mutate(time=rep(time(EuStockMarkets), 4))
+
+```
+
+```{r, echo=TRUE}
+plot_ly( x=stocks$price, type="histogram")
+
+```
+
+
+```{r, echo=TRUE}
+plot_ly(y=stocks$price,color = stocks$index, type="box")
+
+```
+
+```{r, echo=TRUE}
+plot_ly(data=stocks,x=~ stocks$time,y=~stocks$price,color = ~stocks$index ,type="scatter",mode="markers")
+
+```
